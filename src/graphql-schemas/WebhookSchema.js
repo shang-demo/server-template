@@ -1,3 +1,4 @@
+/**
 const {
   GraphQLInputObjectType,
   GraphQLList,
@@ -155,3 +156,4 @@ module.exports = {
   mutation,
 };
 
+*/
