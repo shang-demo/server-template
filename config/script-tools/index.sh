@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # 先检查 依赖 jq
 function _checkDependence() {

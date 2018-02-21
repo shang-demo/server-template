@@ -27,7 +27,7 @@ function initProject() {
   fi
   projectName=`basename ${cpDir}`
 
-
+  echo "${cpDir}"
 	if [ -e ${cpDir} ]
 	then
 		echo "${cpDir} 目录存在!!";
@@ -56,7 +56,7 @@ function initProject() {
 
 	cat ${defaultConfigPath} | jq "del(.merge) | .dev.url=\"\" | .dev.remote=\"origin\" | .dev.branch=\"\"" > __tmp.json__
 	rm ${defaultConfigPath}
-	mv __tmp.json__ defaultConfigPath
+	mv __tmp.json__ ${defaultConfigPath}
 
 	rm ${defaultCopyScriptPath}
 
