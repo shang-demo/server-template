@@ -28,7 +28,20 @@ function initProject() {
   projectName=`basename ${cpDir}`
 
   echo "${cpDir}"
-	if [ -e ${cpDir} ]
+
+  local checkCover=1
+  if [ "0" = "$2" ]
+  then
+    checkCover=0
+  fi
+
+  local isYarn=1
+  if [ "0" = "$3" ]
+  then
+    isYarn=0
+  fi
+
+  if [ "${checkCover}" = "1" -a -e ${cpDir} ]
 	then
 		echo "${cpDir} 目录存在!!";
 
@@ -61,10 +74,15 @@ function initProject() {
 	rm ${defaultCopyScriptPath}
 
 	echo "# ${projectName}" > README.md
+	touch Makefile.rsync.env.private
 
 	git add -A
 	git commit -m "init project"
-	yarnpkg
+
+	if [ "${isYarn}" = "1" ]
+	then
+	  yarnpkg
+	fi
 }
 
 checkDependencies
