@@ -1,5 +1,5 @@
 .PHONY:*
-prodNodeEnv:=$(shell cat Makefile.rsync.env.private)
+prodNodeEnv:=$(shell cat Makefile.rsync.env.private 2>&1)
 
 gulp:
 	@ gulp
