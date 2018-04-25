@@ -53,7 +53,6 @@ const executeCmdInput = new GraphQLInputObjectType({
   },
 });
 
-
 const VersionType = new GraphQLObjectType({
   name: 'VersionType',
   description: '版本结构',
@@ -99,7 +98,6 @@ const TokenInput = new GraphQLInputObjectType({
   },
 });
 
-
 let query = {
   version: {
     type: VersionType,
@@ -144,4 +142,3 @@ module.exports = {
   query,
   mutation,
 };
-

@@ -67,13 +67,12 @@ class My extends EventEmitter {
   }
 
   [SymbolCheckMiddleware](name) {
-    return Promise
-      .each(this.middlewares, (middleware) => {
-        if (_.isFunction(middleware[name])) {
-          return middleware[name].call(this);
-        }
-        return undefined;
-      })
+    return Promise.each(this.middlewares, (middleware) => {
+      if (_.isFunction(middleware[name])) {
+        return middleware[name].call(this);
+      }
+      return undefined;
+    })
       .then(() => {
         this.emit(`${name}ed`);
       })
@@ -83,18 +82,16 @@ class My extends EventEmitter {
       });
   }
 
-
   [symbolLift]() {
-    return Promise
-      .each(this.middlewares, (middleware) => {
-        if (_.isFunction(middleware)) {
-          return middleware.call(this);
-        }
-        if (_.isFunction(middleware.lift)) {
-          return middleware.lift.call(this);
-        }
-        return undefined;
-      })
+    return Promise.each(this.middlewares, (middleware) => {
+      if (_.isFunction(middleware)) {
+        return middleware.call(this);
+      }
+      if (_.isFunction(middleware.lift)) {
+        return middleware.lift.call(this);
+      }
+      return undefined;
+    })
       .then(() => {
         this.emit('lifted');
       })
@@ -111,14 +108,12 @@ class My extends EventEmitter {
     return this;
   }
 
-
   listen() {
     this.promise = this.promise.then(() => {
       return this[SymbolCheckMiddleware]('listen');
     });
     return this;
   }
-
 
   lower() {
     this.promise = this.promise.then(() => {
@@ -127,6 +122,5 @@ class My extends EventEmitter {
     return this;
   }
 }
-
 
 module.exports = My;

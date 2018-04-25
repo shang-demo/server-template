@@ -3,6 +3,8 @@ import path from 'path';
 import process from 'process';
 import fs from 'fs';
 
+const __dirname = path.dirname(new url.URL(import.meta.url).pathname);
+
 // 从package.json中
 // 的 dependencies devDependencies 获取项目所需npm模块信息
 const ROOT_PATH = process.cwd();
@@ -26,7 +28,10 @@ const buildIns = new Set(
 const JS_EXTENSIONS = new Set(['.js', '.mjs']);
 const JSON_EXTENSIONS = new Set(['.json']);
 
-export default function resolve(specifier, parentModuleURL, defaultResolve) {
+const baseURL = new url.URL('file://');
+baseURL.pathname = `${process.cwd()}/`;
+
+export async function resolve(specifier, parentModuleURL = baseURL, defaultResolve) {
   // 判断是否为Node原生模块
   if (buildIns.has(specifier)) {
     return {
@@ -46,11 +51,23 @@ export default function resolve(specifier, parentModuleURL, defaultResolve) {
   }
 
   // 判断是否为*.js、*.mjs、*.json文件
-  const resolved = new url.URL(specifier, parentModuleURL);
-  const ext = path.extname(resolved.pathname);
+  let resolved = new url.URL(specifier, parentModuleURL);
+  let ext = path.extname(resolved.pathname);
+  if (!ext) {
+    resolved = new url.URL(`${specifier}.js`, parentModuleURL);
+    ext = path.extname(resolved.pathname);
+  }
 
   // 如果是*.js、*.mjs文件
   if (JS_EXTENSIONS.has(ext)) {
+    // 在 src/init 目录下的内容为cjs, 因为有 require 动态加载的内容
+    if (/^\/init\//.test(resolved.href.replace(`file://${__dirname}`, ''))) {
+      return {
+        url: resolved.href,
+        format: 'cjs',
+      };
+    }
+
     return {
       url: resolved.href,
       format: 'esm',
@@ -67,3 +84,5 @@ export default function resolve(specifier, parentModuleURL, defaultResolve) {
 
   throw new Error(`Cannot load file with non-JavaScript file extension ${ext}.`);
 }
+
+export default resolve;

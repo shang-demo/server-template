@@ -8,9 +8,9 @@ function lift() {
   /* eslint max-len: ["error", 150] */
 
   // eslint-disable-next-line no-multi-assign
-  let policies = this.policies = {};
+  let policies = (this.policies = {});
   // eslint-disable-next-line no-multi-assign
-  let policiesPath = this.config.paths.policies = path.join(this.projectPath, 'policies');
+  let policiesPath = (this.config.paths.policies = path.join(this.projectPath, 'policies'));
 
   return filePathOneLayer(policiesPath)
     .map((file) => {
@@ -75,10 +75,9 @@ function lift() {
               return null;
             });
 
-            let p = Promise
-              .mapSeries(prePolicies, (policy) => {
-                return policy(...args);
-              })
+            let p = Promise.mapSeries(prePolicies, (policy) => {
+              return policy(...args);
+            })
               .then(() => {
                 return originResolve(...args);
               })
@@ -87,10 +86,13 @@ function lift() {
                   return data;
                 }
 
-                return Promise
-                  .reduce(postPolicies, (result, policy) => {
+                return Promise.reduce(
+                  postPolicies,
+                  (result, policy) => {
                     return policy([result].concat(args));
-                  }, data);
+                  },
+                  data
+                );
               });
 
             _.forEach(catchPolicies, (policy) => {

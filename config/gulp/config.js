@@ -1,18 +1,18 @@
-
 const path = require('path');
 
-/** **** start: 用户配置***********/
+/** **** start: 用户配置********** */
 
-let alterableSetting = {  // prod 的 基础路径
+let alterableSetting = {
+  // prod 的 基础路径
   basePath: 'production/',
   publicPath: 'production/public/',
   viewPath: 'production/views/',
 };
 
-
 function getCommonConfig() {
   return {
-    clean: {                   // 清除生成文件的路径
+    clean: {
+      // 清除生成文件的路径
       src: [
         `${alterableSetting.basePath}**/*`,
         'clinet/styles/',
@@ -22,12 +22,7 @@ function getCommonConfig() {
       ],
     },
     server: {
-      src: [
-        '**/*',
-        '!public/**/*',
-        '!views/**/*',
-        '!index.html',
-      ],
+      src: ['**/*', '!public/**/*', '!views/**/*', '!index.html'],
       opt: {
         cwd: 'src/',
         base: 'src/',
@@ -35,10 +30,7 @@ function getCommonConfig() {
       dest: alterableSetting.basePath,
     },
     watchRebuildTypings: {
-      src: [
-        'services/**/*',
-        'models/**/*'
-      ],
+      src: ['services/**/*', 'models/**/*'],
       opt: {
         cwd: 'src/',
         base: 'src/',
@@ -52,14 +44,14 @@ function getCommonConfig() {
         args: ['--experimental-modules', '--loader ./loader.mjs'],
         watch: ['src/'],
         env: {
-          NODE_ENV: 'development'
+          NODE_ENV: 'development',
         },
       },
       events: {
         crash: true,
         start: false,
-      }
-    }
+      },
+    },
   };
 }
 

@@ -36,7 +36,7 @@ function lift() {
       pattern = key;
     }
 
-    if (!(_.includes(allMethods, method))) {
+    if (!_.includes(allMethods, method)) {
       throw new Error(`invalid route method: ${method}`);
     }
 
@@ -52,6 +52,4 @@ function lift() {
   this.app.use(router.allowedMethods());
 }
 
-
 module.exports = lift;
-

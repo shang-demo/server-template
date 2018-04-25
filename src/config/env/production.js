@@ -16,7 +16,7 @@ module.exports = {
         {
           host: '112.74.107.82',
           port: 13508,
-        }
+        },
       ],
       database: MONGODB_DATABASE,
     },

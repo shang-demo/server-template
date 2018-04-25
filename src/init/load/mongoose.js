@@ -58,16 +58,19 @@ function getMongodbUri(config = {}) {
 
 function define(db, modelName, opt, config) {
   // eslint-disable-next-line no-param-reassign
-  config = _.assign({
-    timestamps: true,
-    set: {
-      toJSON: {
-        transform(doc, ret) {
-          ret.id = ret._id;
+  config = _.assign(
+    {
+      timestamps: true,
+      set: {
+        toJSON: {
+          transform(doc, ret) {
+            ret.id = ret._id;
+          },
         },
       },
     },
-  }, config);
+    config
+  );
 
   let schemaConfig = {
     timestamps: config.timestamps,
@@ -137,10 +140,12 @@ function exposeGlobal(opt) {
 }
 
 function initModel(modelName, model, connections) {
-  model.options = _.assign({
-    connection: 'defaultMongo',
-  }, model.options);
-
+  model.options = _.assign(
+    {
+      connection: 'defaultMongo',
+    },
+    model.options
+  );
 
   let db = getDb(model.options.connection, connections);
   let result = define(db, modelName, model.attributes, model.options);
@@ -154,7 +159,6 @@ function initModel(modelName, model, connections) {
   };
 }
 
-
 function lift() {
   let modelsPath = path.join(this.projectPath, 'models');
   exportTypes();
@@ -162,7 +166,11 @@ function lift() {
   /* eslint-disable import/no-dynamic-require */
   return filePathOneLayer(modelsPath)
     .map((file) => {
-      return initModel(file.name.replace(/\.js$/i, ''), require(file.path), this.config.connections);
+      return initModel(
+        file.name.replace(/\.js$/i, ''),
+        require(file.path),
+        this.config.connections
+      );
     })
     .map((opt) => {
       this.model[opt.modelName] = opt;

@@ -21,32 +21,35 @@ const svc = {
       process.exit(1);
     }
 
-    return Promise
-      .map(_.keys(svc.listeners), (key) => {
-        return svc.addConsume(key, svc.listeners[key]);
-      })
-      .catch((e) => {
-        logger.warn(e);
-        process.exit(1);
-      });
-  },
-  async retryCreateChannel() {
-    return promiseRetry(async (retry, number) => {
-      logger.debug('retryCreateChannel attempt number', number);
-      try {
-        await svc.createChannel();
-      }
-      catch (e) {
-        logger.warn(e);
-        retry(e);
-      }
-    }, {
-      retries: 10,
-      maxTimeout: 3 * 1000,
+    return Promise.map(_.keys(svc.listeners), (key) => {
+      return svc.addConsume(key, svc.listeners[key]);
+    }).catch((e) => {
+      logger.warn(e);
+      process.exit(1);
     });
   },
+  async retryCreateChannel() {
+    return promiseRetry(
+      async (retry, number) => {
+        logger.debug('retryCreateChannel attempt number', number);
+        try {
+          await svc.createChannel();
+        }
+        catch (e) {
+          logger.warn(e);
+          retry(e);
+        }
+      },
+      {
+        retries: 10,
+        maxTimeout: 3 * 1000,
+      }
+    );
+  },
   amqpUrl(options) {
-    return `amqp://${options.username ? (`${options.username}:${options.password}@`) : ''}${options.host || '127.0.0.1'}:${options.port || 5672}`;
+    return `amqp://${
+      options.username ? `${options.username}:${options.password}@` : ''
+    }${options.host || '127.0.0.1'}:${options.port || 5672}`;
   },
   async createChannel() {
     let rabbitmqConfig = mKoa.config.get('rabbitmq', {});
@@ -94,22 +97,25 @@ const svc = {
     if (svc.channel) {
       return svc.channel;
     }
-    return promiseRetry((retry, number) => {
-      logger.info('getChannel attempt number', number);
+    return promiseRetry(
+      (retry, number) => {
+        logger.info('getChannel attempt number', number);
 
-      return Promise.resolve()
-        .then(() => {
-          if (svc.channel) {
-            return svc.channel;
-          }
+        return Promise.resolve()
+          .then(() => {
+            if (svc.channel) {
+              return svc.channel;
+            }
 
-          return Promise.reject(new Error('no channel found'));
-        })
-        .catch(retry);
-    }, {
-      retries: 10,
-      maxTimeout: 3 * 1000,
-    });
+            return Promise.reject(new Error('no channel found'));
+          })
+          .catch(retry);
+      },
+      {
+        retries: 10,
+        maxTimeout: 3 * 1000,
+      }
+    );
   },
   async addConsume(key, fun) {
     svc.listeners[key] = fun;

@@ -1,8 +1,7 @@
 const _ = require('lodash');
 const util = require('util');
 
-function Errors() {
-}
+function Errors() {}
 
 util.inherits(Errors, Error);
 

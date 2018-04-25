@@ -1,4 +1,6 @@
-const My = require('./init/index');
+// const My = require('./init/index');
+
+import My from './init/index';
 
 const lift = new My({ alias: 'mKoa' })
   .use('config')
@@ -14,7 +16,7 @@ const lift = new My({ alias: 'mKoa' })
   .use('koa-server')
   // .use('rabbitmq')
   // .use('socket.io')
-  .use('lifted-ascii')
+  // .use('lifted-ascii')
   .use('bootstrap')
   .on('error', (e) => {
     // eslint-disable-next-line no-console
@@ -23,5 +25,4 @@ const lift = new My({ alias: 'mKoa' })
   })
   .lift();
 
-
-module.exports = lift;
+export default lift;
