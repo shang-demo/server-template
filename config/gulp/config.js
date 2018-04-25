@@ -48,7 +48,8 @@ function getCommonConfig() {
     nodemon: {
       config: {
         script: 'src/index.js',
-        ext: 'js',
+        ext: 'js,mjs,json',
+        args: ['--experimental-modules', '--loader ./loader.mjs'],
         watch: ['src/'],
         env: {
           NODE_ENV: 'development'
