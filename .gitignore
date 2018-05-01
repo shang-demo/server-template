@@ -50,6 +50,7 @@ npm-debug.log
 # user
 .git
 .idea
+.vscode
 
 config/typings/shang-auto-generate.d.ts
 src/public/*
