@@ -10,6 +10,8 @@ const lift = new My({ alias: 'mKoa' })
   // .use('graphql-schema')
   // .use('graphql-route')
   .use('koa')
+  // .use('koa-controller')
+  // .use('koa-policy')
   .use('koa-route')
   .use('koa-server')
   // .use('rabbitmq')
@@ -22,6 +24,5 @@ const lift = new My({ alias: 'mKoa' })
     process.exit(1);
   })
   .lift();
-
 
 module.exports = lift;
