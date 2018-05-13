@@ -27,13 +27,13 @@ module.exports.routes = {
       });
   },
 
-  '/': async function graphqlRoutes(...args) {
-    return mKoa.graphql.routes(...args);
-  },
+  // '/': async function graphqlRoutes(...args) {
+  //   return mKoa.graphql.routes(...args);
+  // },
 
-  '/graphql': async function graphqlRoutes(...args) {
-    return mKoa.graphql.routes(...args);
-  },
+  // '/graphql': async function graphqlRoutes(...args) {
+  //   return mKoa.graphql.routes(...args);
+  // },
 
   // 未找到
   '/*': async function viewHtml(ctx) {
