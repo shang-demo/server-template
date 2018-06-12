@@ -7,6 +7,7 @@ import { camelize } from 'humps';
 import { writeFile, readFile } from 'fs-extra';
 import { components, cpDirs } from './constants';
 import { getLockPath } from './yarn-lock/index';
+import { parseName } from './package-info-parser';
 
 const templateDir = pathResolve(__dirname, '../');
 
@@ -63,6 +64,12 @@ async function createComponent(targetDir, name) {
     }
 
     if (config.src && config.value) {
+      if (typeof config.value === 'string') {
+        fileMap[config.src] = fileMap[config.src] || '';
+        fileMap[config.src] = `${fileMap[config.src]}\n${config.value}`;
+        return null;
+      }
+
       fileMap[config.src] = fileMap[config.src] || {};
       fileMap[config.src] = merge(fileMap[config.src], config.value);
       return null;
@@ -70,7 +77,14 @@ async function createComponent(targetDir, name) {
 
     if (config.package) {
       appendPackageRequired(config.package);
+      return null;
     }
+
+    if (config.dependencies) {
+      packageRequired.push(...config.dependencies);
+      return null;
+    }
+
     return null;
   });
 }
@@ -133,10 +147,33 @@ async function ensureTargetDir(targetDir) {
   await exec(`mkdir -p ${targetDir}`);
 }
 
-async function buildComponents(targetDir, {
-  model, koaServer, senecaClient, senecaServer,
-}) {
+async function buildComponents(
+  targetDir,
+  {
+    model, koaServer, senecaClient, senecaServer, customerErrors,
+  }
+) {
   let requiredComponents = ['als', 'config', 'log'];
+
+  if (customerErrors) {
+    let packageName = await parseName(customerErrors);
+    components.error = [
+      {
+        src: 'src/config/error.js',
+        value: `
+    import buildError from '@ofa2/ofa2-error';
+    import errors from '${packageName}';
+    
+    global.Errors = buildError(errors);
+    `,
+      },
+      {
+        dependencies: [customerErrors],
+      },
+    ];
+    requiredComponents.push('error');
+  }
+
   // mongoose model
   if (model) {
     requiredComponents.push(...['model']);
@@ -168,7 +205,15 @@ async function buildComponents(targetDir, {
 
 async function buildConfigFile(targetDir) {
   await Promise.all(Object.keys(fileMap).map(async (key) => {
-    let str = `export default\n${JSON.stringify(fileMap[key], null, 2)}`;
+    let str = '';
+
+    if (typeof fileMap[key] === 'string') {
+      str = fileMap[key];
+    }
+    else {
+      str = `export default\n${JSON.stringify(fileMap[key], null, 2)}`;
+    }
+
     let p = pathResolve(targetDir, key);
 
     await ensureFile(p);

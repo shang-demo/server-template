@@ -1,4 +1,16 @@
 const components = {
+  error: [
+    {
+      src: 'src/config/error.js',
+      value: `
+  import buildError from '@ofa2/ofa2-error';
+  
+  global.Errors = buildError({
+    UnknownError: { code: 1, message: 'unknown error, need feedback' },
+  });
+  `,
+    },
+  ],
   als: [
     {
       use: 'ofa2-als',
@@ -73,7 +85,7 @@ const components = {
       cp: 'src/policies',
     },
     {
-      package: 'shortid',
+      dependencies: ['shortid'],
     },
   ],
   koaRoute: [
@@ -90,9 +102,6 @@ const components = {
   koaServer: [
     {
       use: 'ofa2-koa-server',
-    },
-    {
-      dependencies: ['shortid'],
     },
   ],
 

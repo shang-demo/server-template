@@ -24,6 +24,7 @@ async function parseArgv() {
     .option('-c --senecaClient', 'add seneca client')
     .option('-s --senecaServer', 'add seneca server')
     .option('-m --model', 'add model')
+    .option('-e --customerErrors <error-package>', 'add customer errors package')
     .action((target) => {
       targetDir = target;
     })
@@ -77,6 +78,7 @@ async function parseArgv() {
     koaServer: program.koaServer,
     senecaClient: program.senecaClient,
     senecaServer: program.senecaServer,
+    customerErrors: program.customerErrors,
   };
 
   let message = '';
