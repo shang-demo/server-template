@@ -105,6 +105,10 @@ function formatCode(str) {
   return format(options);
 }
 
+async function getPackageRequired() {
+  return packageRequired;
+}
+
 async function buildPackage(targetDir) {
   await createPackageJson(targetDir);
   let lockPath = await getLockPath(packageRequired);
@@ -129,22 +133,24 @@ async function ensureTargetDir(targetDir) {
   await exec(`mkdir -p ${targetDir}`);
 }
 
-async function buildComponents(targetDir, program) {
+async function buildComponents(targetDir, {
+  model, koaServer, senecaClient, senecaServer,
+}) {
   let requiredComponents = ['als', 'config', 'log'];
   // mongoose model
-  if (program.model) {
+  if (model) {
     requiredComponents.push(...['model']);
   }
 
-  if (program.koaServer) {
+  if (koaServer) {
     requiredComponents.push(...['koa', 'koaController', 'koaPolicy', 'koaRoute', 'koaServer']);
   }
 
-  if (program.senecaClient) {
+  if (senecaClient) {
     requiredComponents.push(...['seneca', 'senecaClient', 'senecaWrapAct']);
   }
 
-  if (program.senecaServer) {
+  if (senecaServer) {
     // senecaClient may had add seneca
     if (requiredComponents.indexOf('seneca') === -1) {
       requiredComponents.push('seneca');
@@ -215,5 +221,22 @@ async function buildIndexJs(targetDir) {
   await writeFile(pathResolve(targetDir, 'src/index.js'), formatCode(str));
 }
 
-export { ensureTargetDir, cpBase, buildComponents, buildConfigFile, buildIndexJs, buildPackage };
-export default {};
+export {
+  ensureTargetDir,
+  cpBase,
+  buildComponents,
+  buildConfigFile,
+  buildIndexJs,
+  buildPackage,
+  getPackageRequired,
+};
+
+export default {
+  ensureTargetDir,
+  cpBase,
+  buildComponents,
+  buildConfigFile,
+  buildIndexJs,
+  buildPackage,
+  getPackageRequired,
+};

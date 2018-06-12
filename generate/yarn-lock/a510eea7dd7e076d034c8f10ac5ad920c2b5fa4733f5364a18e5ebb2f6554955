@@ -582,9 +582,9 @@
   dependencies:
     "@ofa2/file-path-one-layer" "^1.0.5"
 
-"@ofa2/ofa2-error@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@ofa2/ofa2-error/-/ofa2-error-1.0.2.tgz#ed004f1640cfde9fe6d0fe217ee3bd46048083aa"
+"@ofa2/ofa2-error@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@ofa2/ofa2-error/-/ofa2-error-1.0.3.tgz#09d486e4e434ddd19073c002c1670a0f5f8cb260"
 
 "@ofa2/ofa2-koa-policy@^1.0.2":
   version "1.0.2"
@@ -637,9 +637,9 @@
     bluebird "^3.5.1"
     lodash "^4.17.10"
 
-"@ofa2/ofa2-seneca-wrap@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@ofa2/ofa2-seneca-wrap/-/ofa2-seneca-wrap-1.0.2.tgz#b51c1fda0cd8690b3bbbd2c8ec873409d786f2a6"
+"@ofa2/ofa2-seneca-wrap@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@ofa2/ofa2-seneca-wrap/-/ofa2-seneca-wrap-1.0.5.tgz#dd6642b1ab454aa5dce4ed290da85b5ec7304ddd"
   dependencies:
     bluebird "^3.5.1"
     lodash "^4.17.10"
@@ -1125,8 +1125,8 @@ camelcase@^4.0.0:
   resolved "https://registry.npmjs.org/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
 
 caniuse-lite@^1.0.30000844:
-  version "1.0.30000851"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000851.tgz#3b498aebf9f92cf6cff4ab54d13b557c0b590533"
+  version "1.0.30000852"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30000852.tgz#8b7510cec030cac7842e52beca2bf292af65f935"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -1268,14 +1268,14 @@ collection-visit@^1.0.0:
     object-visit "^1.0.0"
 
 color-convert@^1.9.0:
-  version "1.9.1"
-  resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.1.tgz#c1261107aeb2f294ebffec9ed9ecad529a6097ed"
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/color-convert/-/color-convert-1.9.2.tgz#49881b8fba67df12a96bdf3f56c0aab9e7913147"
   dependencies:
-    color-name "^1.1.1"
+    color-name "1.1.1"
 
-color-name@^1.1.1:
-  version "1.1.3"
-  resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
+color-name@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/color-name/-/color-name-1.1.1.tgz#4b1415304cf50028ea81643643bd82ea05803689"
 
 color-support@^1.1.3:
   version "1.1.3"
