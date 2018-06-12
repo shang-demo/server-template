@@ -3,9 +3,6 @@ const components = {
     {
       use: 'ofa2-als',
     },
-    {
-      dependencies: ['shortid'],
-    },
   ],
   config: [
     {
@@ -93,6 +90,9 @@ const components = {
   koaServer: [
     {
       use: 'ofa2-koa-server',
+    },
+    {
+      dependencies: ['shortid'],
     },
   ],
 
@@ -219,7 +219,6 @@ const components = {
 };
 
 const cpDirs = [
-  '.vscode',
   'config',
   'src/config/error.js',
   'src/config/global.js',
