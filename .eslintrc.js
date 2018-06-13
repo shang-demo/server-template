@@ -13,6 +13,7 @@ module.exports = {
     ObjectId: false,
     ObjectID: false,
     Promise: false,
+    throwIfMissing: false,
   },
   rules: {
     'arrow-body-style': ['error', 'always'],
