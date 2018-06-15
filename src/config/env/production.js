@@ -36,7 +36,7 @@ export default {
         password: undefined,
 
         type: 'amqp',
-        pin: ['role:template', 'role:console'],
+        pin: ['role:template'],
         consume: {
           noAck: true,
         },

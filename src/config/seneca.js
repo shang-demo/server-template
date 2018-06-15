@@ -3,6 +3,8 @@ export default {
   options: {
     timeout: 600000,
   },
+  requestLog: 'plain',
+  responseLog: true,
   client: {
     connection: 'senecaClient',
   },
