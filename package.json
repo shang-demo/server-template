@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "./node_modules/.bin/babel-node src/",
     "lint": "./node_modules/.bin/eslint src/",
     "lint-fix": "./node_modules/.bin/eslint --fix src/"
   },
