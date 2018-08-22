@@ -4,6 +4,10 @@ import Promise from 'bluebird';
 global._ = _;
 global.Promise = Promise;
 
-global.throwIfMissing = function throwIfMissing(extra, message) {
+function throwIfMissing(extra, message) {
   throw new Errors.ParamsRequired(extra, message);
-};
+}
+
+global.throwIfMissing = throwIfMissing;
+global.tim = throwIfMissing;
+
