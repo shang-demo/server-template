@@ -24,6 +24,10 @@ const defaultNodemonEvent = {
       message: utilities.formatDate('hh:mm:ss'),
     });
   },
+  quit() {
+    console.warn('\n===============\nApp has quit');
+    process.exit(1);
+  },
 };
 
 let gulpConfig = require('./config.js');
