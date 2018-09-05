@@ -1,16 +1,20 @@
+import isObject from 'lodash/isObject';
+
 const svc = {
   mongoErrors: {
     duplicateKey: 11000,
   },
-  isDuplicateKeyError(err) {
+  isDuplicateKeyError(err: any) {
     return err.code === svc.mongoErrors.duplicateKey;
   },
-  attachErrorCode(err, code) {
-    if (!_.isObject(err)) {
+  attachErrorCode(err: any, code: any) {
+    /* tslint:disable */
+    if (!isObject(err)) {
       // eslint-disable-next-line no-param-reassign
       err = new Error(err);
     }
     err.code = code;
+    /* tslint:enable */
     return err;
   },
   getStartOfDay(travel = 0, date = new Date(), type = 'day') {
@@ -21,17 +25,15 @@ const svc = {
 
     if (type === 'day') {
       date.setDate(date.getDate() + travel);
-    }
-    else if (type === 'month') {
+    } else if (type === 'month') {
       date.setMonth(date.getMonth() + travel);
-    }
-    else {
+    } else {
       logger.warn('type: ', type, 'not support');
     }
     return date;
   },
-  formatDate: function formatDate(fmt, date = new Date()) {
-    let o = {
+  formatDate: function formatDate(fmt: string, date = new Date()) {
+    let o: { [key: string]: number } = {
       '([yY]+)': date.getFullYear(),
       '(M+)': date.getMonth() + 1, // 月份
       '([dD]+)': date.getDate(), // 日
@@ -41,12 +43,15 @@ const svc = {
       '([qQ]+)': Math.floor((date.getMonth() + 3) / 3), // 季度
       '(S+)': date.getMilliseconds(),
     };
+
+    /* tslint:disable */
     Object.keys(o).forEach((key) => {
       if (new RegExp(key).test(fmt)) {
         // eslint-disable-next-line no-param-reassign
         fmt = fmt.replace(RegExp.$1, `00${o[key]}`.substr(-RegExp.$1.length));
       }
     });
+    /* tslint:enable */
     return fmt;
   },
 };

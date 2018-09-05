@@ -1,8 +1,8 @@
 const showBody = false;
 
-export default async function (ctx, next) {
+export default async function(ctx: any, next: Function) {
   const start = Date.now();
-  let logs = [];
+  let logs: any = [];
 
   await next();
 
@@ -14,8 +14,7 @@ export default async function (ctx, next) {
     // eslint-disable-next-line no-underscore-dangle
     if (ctx.body && ctx.body._readableState) {
       logs.push('response send buffer');
-    }
-    else {
+    } else {
       logs.push(ctx.body || '');
     }
   }

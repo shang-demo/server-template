@@ -14,7 +14,7 @@ function getCommonConfig() {
       },
     },
     server: {
-      src: ['**/*', '!views/**/*'],
+      src: ['**/*', '!views/**/*', '!**/*.d.ts'],
       opt: {
         cwd: 'src/',
         base: 'src/',
@@ -36,15 +36,19 @@ function getCommonConfig() {
     },
     nodemon: {
       config: {
-        script: 'src/index.js',
-        ext: 'js',
+        script: 'src/index.ts',
+        ext: 'js,ts',
         watch: ['src/'],
+        verbose: true,
+        restartable: 'rs',
         env: {
           NODE_ENV: 'development',
         },
-        // if you want use attach debug, use `INSPECT=9229 gulp`
-        args: process.env.INSPECT ? [`--inspect=${process.env.INSPECT}`] : '',
-        // for es6+
+        args: [
+          '--extensions=".ts"',
+          // if you want use attach debug, use `INSPECT=9229 gulp`
+          process.env.INSPECT ? [`--inspect=${process.env.INSPECT}`] : '',
+        ],
         exec: 'babel-node',
       },
       events: {

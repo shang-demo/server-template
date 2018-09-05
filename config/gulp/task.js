@@ -93,9 +93,11 @@ gulp.task('lint', (done) => {
     .src(config.server.src, config.server.opt)
     .pipe($.cached('serverJs'))
     .pipe($.eslint())
-    .pipe($.eslint.result((result) => {
-      utilities.eslintReporter(result);
-    }))
+    .pipe(
+      $.eslint.result((result) => {
+        utilities.eslintReporter(result);
+      })
+    )
     .pipe($.remember('serverJs'));
 });
 
@@ -110,23 +112,16 @@ gulp.task('wlint', (done) => {
   gulp.watch(config.server.src, config.server.opt).on('change', (filePath) => {
     clearTimeout(lintTimer);
 
-    lintTimer = setTimeout(() => {
-      utilities
-        .spawnDefer({
+    lintTimer = setTimeout(async () => {
+      try {
+        await utilities.spawnDefer({
           cmd: 'clear',
           arg: [],
-        })
-        .then(() => {
-          console.info(`${filePath} do eslint`);
-          // js文件需要 lint
-          gulp.series('lint')();
-        })
-        .catch((e) => {
-          console.warn(e);
-          console.info(`${filePath} do eslint`);
-          // js文件需要 lint
-          gulp.series('lint')();
         });
+      } catch (e) {}
+
+      console.info(`${filePath} do eslint`);
+      gulp.series('lint')();
     });
   });
 
@@ -140,14 +135,11 @@ gulp.task('nodemon', (done) => {
     let event = config.nodemon.events[eventName];
     if (typeof eventName === 'function') {
       nodemon.on(eventName, event);
-    }
-    else if (event === true && defaultNodemonEvent[eventName]) {
+    } else if (event === true && defaultNodemonEvent[eventName]) {
       nodemon.on(eventName, defaultNodemonEvent[eventName]);
-    }
-    else if (event === undefined || event === false) {
+    } else if (typeof event === 'undefined' || event === false) {
       return null;
-    }
-    else {
+    } else {
       console.warn(`nodemon event not support for ${eventName}`);
     }
     return null;
@@ -157,7 +149,7 @@ gulp.task('nodemon', (done) => {
 });
 
 gulp.task('babel', () => {
-  let f = $.filter(['**/*.js'], { restore: true });
+  let f = $.filter(['**/*.ts'], { restore: true });
   let replaceFilter = $.filter(config.replace.src, { restore: true });
 
   return gulp
@@ -178,4 +170,10 @@ gulp.task('cp', () => {
 });
 
 gulp.task('default', gulp.series(setDevEnv, gulp.parallel('nodemon', 'wlint')));
-gulp.task('build:dist', gulp.series(setDevEnv, 'clean', 'lint', 'babel', 'cp'));
+
+gulp.task(
+  'build:dist',
+  gulp.series(setDevEnv, 'clean', gulp.parallel('lint', gulp.series('babel', 'cp')))
+);
+
+gulp.task('build', gulp.series('build:dist'));

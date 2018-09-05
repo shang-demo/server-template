@@ -18,8 +18,8 @@ export default {
       transport: '@ofa2/ofa2-seneca-amqp-transport',
       options: {
         url: 'amqp://127.0.0.1',
-        username: undefined,
-        password: undefined,
+        // username: undefined,
+        // password: undefined,
 
         type: 'amqp',
         pin: 'role:template',
@@ -32,8 +32,8 @@ export default {
       transport: '@ofa2/ofa2-seneca-amqp-transport',
       options: {
         url: 'amqp://127.0.0.1',
-        username: undefined,
-        password: undefined,
+        // username: undefined,
+        // password: undefined,
 
         type: 'amqp',
         pin: ['role:template'],

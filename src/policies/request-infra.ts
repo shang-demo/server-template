@@ -1,4 +1,4 @@
-export default async function (ctx, next) {
+export default async function(ctx, next) {
   if (['POST', 'UPDATE', 'GET'].indexOf(ctx.method) === -1) {
     await next();
     return;

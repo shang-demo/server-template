@@ -19,8 +19,7 @@ const svc = {
 
         if (item.severity === 1) {
           console.log(`${chalk.yellow(location)}\n${chalk.blue(ruleId)} ${chalk.gray(message)}`);
-        }
-        else {
+        } else {
           console.log(`${chalk.red(location)}\n${chalk.blue(ruleId)} ${chalk.gray(message)}`);
         }
         console.log(chalk.gray(`// eslint-disable-next-line ${ruleId}`));
