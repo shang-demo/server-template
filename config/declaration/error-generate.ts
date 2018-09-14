@@ -18,7 +18,7 @@ interface Errors {
   OperationalError(): void;
   UnknownError: typeof ErrFn;
   ParamsRequired: typeof ErrFn;
-  __INSERT_ERRORS__
+__INSERT_ERRORS__
 }
 
 declare var Errors: Errors;

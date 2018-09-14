@@ -23,6 +23,7 @@ interface Seneca {
 
 interface Framework {
   seneca: Seneca;
+  config: any;
 }
 
 declare var framework: Framework;

@@ -9,6 +9,7 @@ declare module '@ofa2/ofa2' {
     use(fun: any): Ofa2;
     on(name: string, cb: CbFn): Ofa2;
     lift(): Ofa2;
+    config: any
   }
 
   export = Ofa2;
