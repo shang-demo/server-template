@@ -11,7 +11,7 @@ declare class ErrFn {
   message: string;
   extra: any;
 
-  constructor(extra: any, ...args: any[]);
+  constructor(extra?: any, ...args: any[]);
 }
 
 interface Errors {
