@@ -89,10 +89,14 @@ gulp.task('lint', (done) => {
     return done();
   }
 
+  let f = $.filter(['**/*.ts'], { restore: true });
+
   return gulp
     .src(config.server.src, config.server.opt)
     .pipe($.cached('serverJs'))
+    .pipe(f)
     .pipe($.eslint())
+    .pipe(f.restore)
     .pipe(
       $.eslint.result((result) => {
         utilities.eslintReporter(result);
