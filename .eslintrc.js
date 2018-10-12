@@ -7,25 +7,8 @@ module.exports = {
     SenecaMsg: false,
     Context: false,
   },
-  extends: ['eslint-config-alloy'],
+  extends: ['@ofa2/eslint-config-ofa2'],
   rules: {
-    'arrow-body-style': ['error', 'always'],
-    // 'brace-style': ['error', 'stroustrup'],
-    'comma-dangle': ['error', {
-      arrays: 'only-multiline',
-      objects: 'always-multiline',
-      imports: 'only-multiline',
-      exports: 'only-multiline',
-      functions: 'never',
-    }],
-    // @fixable 一个缩进必须用两个空格替代
-    indent: [
-      'error',
-      2,
-      {
-        SwitchCase: 1,
-        flatTernaryExpressions: true,
-      },
-    ],
+    'strict': ['off']
   },
 };

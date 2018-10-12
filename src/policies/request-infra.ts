@@ -1,4 +1,4 @@
-export default async function(ctx, next) {
+export default async (ctx: Context, next: Function) => {
   if (['POST', 'UPDATE', 'GET'].indexOf(ctx.method) === -1) {
     await next();
     return;
@@ -9,6 +9,7 @@ export default async function(ctx, next) {
     logs.push('--- body:');
     logs.push(ctx.request.body || {});
   }
+
   logger.info(...logs);
   await next();
-}
+};

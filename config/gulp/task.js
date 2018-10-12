@@ -7,6 +7,11 @@ const nodemon = require('nodemon');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 const replace = require('gulp-replace');
+const gulpLoadPlugins = require('gulp-load-plugins');
+const ts = require('gulp-typescript');
+const { spawn } = require('child_process');
+
+const tsProject = ts.createProject('tsconfig.json');
 
 const utilities = require('./utilities');
 
@@ -25,56 +30,20 @@ const defaultNodemonEvent = {
     });
   },
   quit() {
-    console.warn('\n===============\nApp has quit');
+    console.warn('\n===============\nApp has quit\n===============\n');
     process.exit(1);
   },
 };
 
-let gulpConfig = require('./config.js');
+const config = require('./config.js');
 
-let specConfig = null; // 在环境初始化之后再读取配置
-let config = null;
-
-let $ = require('gulp-load-plugins')({
+let $ = gulpLoadPlugins({
   pattern: ['gulp-*', 'del', 'streamqueue'],
   // ,lazy: false
 });
 
-$.utilities = utilities;
-$.isBuild = false;
-$.isStatic = false;
-$.specConfig = specConfig;
+$.gulp = gulp;
 $.config = config;
-$.isNeedInjectHtml = false;
-
-// set default env
-// eslint-disable-next-line no-underscore-dangle
-gulpConfig.__alterableSetting__ = {};
-// eslint-disable-next-line no-underscore-dangle
-copyAttrValue(gulpConfig.__alterableSetting__, gulpConfig.alterableSetting);
-setDevEnv();
-
-function copyAttrValue(obj, copyObj) {
-  if (!obj || !copyObj) {
-    return obj;
-  }
-
-  Object.keys(copyObj).forEach((attr) => {
-    obj[attr] = copyObj[attr];
-  });
-
-  return obj;
-}
-
-function getConfig() {
-  config = gulpConfig.getCommonConfig();
-  $.config = config;
-}
-
-function setDevEnv(done) {
-  getConfig();
-  return done && done();
-}
 
 function validConfig(setting, name = 'src') {
   return setting[name] && setting[name].length;
@@ -84,7 +53,7 @@ gulp.task('clean', () => {
   return $.del(config.clean.src, config.clean.options);
 });
 
-gulp.task('lint', (done) => {
+gulp.task('eslint', (done) => {
   if (!validConfig(config.server)) {
     return done();
   }
@@ -93,17 +62,32 @@ gulp.task('lint', (done) => {
 
   return gulp
     .src(config.server.src, config.server.opt)
-    .pipe($.cached('serverJs'))
+    .pipe($.cached('eslint'))
     .pipe(f)
     .pipe($.eslint())
-    .pipe(f.restore)
     .pipe(
       $.eslint.result((result) => {
         utilities.eslintReporter(result);
       })
     )
-    .pipe($.remember('serverJs'));
+    .pipe($.eslint.failOnError())
+    .pipe(f.restore)
+    .pipe($.remember('eslint'));
 });
+
+gulp.task('tsc', (done) => {
+  if (!validConfig(config.server)) {
+    return done();
+  }
+
+  return tsProject.src().pipe(tsProject(ts.reporter.longReporter()));
+});
+
+gulp.task('tscWatch', () => {
+  spawn('tsc', ['-w', '--preserveWatchOutput'], { stdio: 'inherit' });
+});
+
+gulp.task('lint', gulp.parallel('eslint', 'tsc'));
 
 gulp.task('wlint', (done) => {
   if (!validConfig(config.server)) {
@@ -112,7 +96,13 @@ gulp.task('wlint', (done) => {
 
   let lintTimer = null;
 
-  gulp.series('lint')();
+  // eslint init run
+  gulp.series('eslint')();
+
+  // tsc watch
+  gulp.series('tscWatch')();
+
+  // eslint watch
   gulp.watch(config.server.src, config.server.opt).on('change', (filePath) => {
     clearTimeout(lintTimer);
 
@@ -122,10 +112,14 @@ gulp.task('wlint', (done) => {
           cmd: 'clear',
           arg: [],
         });
-      } catch (e) {}
+      } catch (e) {
+        console.warn(e);
+      }
 
       console.info(`${filePath} do eslint`);
-      gulp.series('lint')();
+      setTimeout(() => {
+        gulp.series('eslint')();
+      });
     });
   });
 
@@ -173,11 +167,8 @@ gulp.task('cp', () => {
   return gulp.src(config.cp.src, config.cp.opt).pipe(gulp.dest(config.cp.dest));
 });
 
-gulp.task('default', gulp.series(setDevEnv, gulp.parallel('nodemon', 'wlint')));
+gulp.task('default', gulp.parallel('nodemon', 'wlint'));
 
-gulp.task(
-  'build:dist',
-  gulp.series(setDevEnv, 'clean', gulp.parallel('lint', gulp.series('babel', 'cp')))
-);
+gulp.task('build:dist', gulp.series('clean', gulp.parallel('lint', gulp.series('babel', 'cp'))));
 
 gulp.task('build', gulp.series('build:dist'));

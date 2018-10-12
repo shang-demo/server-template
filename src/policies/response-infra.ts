@@ -1,6 +1,6 @@
 const showBody = false;
 
-export default async function(ctx: any, next: Function) {
+export default async (ctx: Context, next: Function) => {
   const start = Date.now();
   let logs: any = [];
 
@@ -20,4 +20,4 @@ export default async function(ctx: any, next: Function) {
   }
 
   logger.info(...logs);
-}
+};

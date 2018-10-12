@@ -1,1 +1,0 @@
-import { BaseContext } from 'koa'
