@@ -818,7 +818,13 @@
   dependencies:
     "@types/node" "*"
 
-"@types/bluebird@^3.5.24":
+"@types/bluebird-global@^3.5.9":
+  version "3.5.9"
+  resolved "https://registry.npmjs.org/@types/bluebird-global/-/bluebird-global-3.5.9.tgz#ed5aad94695c65b261c701bc22bb0755a7843f13"
+  dependencies:
+    "@types/bluebird" "*"
+
+"@types/bluebird@*", "@types/bluebird@^3.5.24":
   version "3.5.24"
   resolved "https://registry.npmjs.org/@types/bluebird/-/bluebird-3.5.24.tgz#11f76812531c14f793b8ecbf1de96f672905de8a"
 
