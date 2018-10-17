@@ -42,8 +42,6 @@ Object.keys(global.Errors)
 
 str = str.replace('__INSERT_ERRORS__', temp);
 
-console.info(str);
-
 (async () => {
   await writeFileAsync(resolve(__dirname, '../../src/types/errors.d.ts'), str);
 })();

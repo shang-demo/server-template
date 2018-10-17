@@ -94,19 +94,18 @@ gulp.task('wlint', (done) => {
     return done();
   }
 
-  let lintTimer = null;
-
   // eslint init run
   gulp.series('eslint')();
 
   // tsc watch
   gulp.series('tscWatch')();
 
+  let timer = null;
   // eslint watch
   gulp.watch(config.server.src, config.server.opt).on('change', (filePath) => {
-    clearTimeout(lintTimer);
+    clearTimeout(timer);
 
-    lintTimer = setTimeout(async () => {
+    timer = setTimeout(async () => {
       try {
         await utilities.spawnDefer({
           cmd: 'clear',
@@ -116,8 +115,21 @@ gulp.task('wlint', (done) => {
         console.warn(e);
       }
 
-      console.info(`${filePath} do eslint`);
+      if (/models\//.test(filePath)) {
+        console.info(`${filePath} do d-ts generate`);
+
+        utilities
+          .spawnDefer({
+            cmd: 'npm',
+            arg: ['run', 'd-ts'],
+          })
+          .catch((e) => {
+            console.warn(e);
+          });
+      }
+
       setTimeout(() => {
+        console.info(`${filePath} do eslint`);
         gulp.series('eslint')();
       });
     });

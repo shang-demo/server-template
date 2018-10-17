@@ -12,7 +12,7 @@
     "build": "npm run build:dist",
     "build:dist": "gulp build:dist",
     "build-types": "tsc --emitDeclarationOnly",
-    "d-ts": "./node_modules/.bin/babel-node --extensions '.ts' config/declaration/error-generate.ts"
+    "d-ts": "./node_modules/.bin/babel-node --extensions '.ts' config/declaration/index.ts"
   },
   "dependencies": {
     "@babel/runtime": "^7.1.2",
@@ -26,7 +26,7 @@
     "@ofa2/ofa2-koa-route": "^2.0.0",
     "@ofa2/ofa2-koa-server": "^1.0.1",
     "@ofa2/ofa2-logger": "^1.0.1",
-    "@ofa2/ofa2-model": "^1.0.1",
+    "@ofa2/ofa2-model": "^1.0.4",
     "@ofa2/ofa2-seneca": "^1.0.2",
     "@ofa2/ofa2-seneca-amqp-transport": "^1.0.1",
     "@ofa2/ofa2-seneca-client": "^1.0.1",
@@ -51,11 +51,12 @@
     "@types/bluebird-global": "^3.5.9",
     "@types/koa": "^2.0.46",
     "@types/lodash": "^4.14.117",
+    "@types/mongoose": "^5.2.19",
     "@types/node": "^10.11.7",
     "@types/shortid": "^0.0.29",
     "babel-eslint": "^10.0.1",
     "del": "^3.0.0",
-    "eslint": "^5.6.1",
+    "eslint": "^5.7.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-typescript": "^0.12.0",
