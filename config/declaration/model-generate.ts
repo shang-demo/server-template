@@ -34,7 +34,7 @@ const modelsPath = resolve(__dirname, '../../src/models');
     })
     .map((file) => {
       let modelName = basename(file.fileName, file.extname);
-      return `var ${modelName}: Model<any>;`;
+      return `  var ${modelName}: Model<any>;`;
     })
     .join('\n');
 
@@ -46,8 +46,7 @@ import { ObjectID as MongodbObjectId } from 'mongodb';
 
 declare global {
   var ObjectID: typeof MongodbObjectId;
-
-  ${str}
+${str}
 }
 `
   );
