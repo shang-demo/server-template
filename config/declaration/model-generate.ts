@@ -42,8 +42,11 @@ const modelsPath = resolve(__dirname, '../../src/models');
     resolve(__dirname, '../../src/types/model.d.ts'),
     `
 import { Model } from 'mongoose';
+import { ObjectID as MongodbObjectId } from 'mongodb';
 
 declare global {
+  var ObjectID: typeof MongodbObjectId;
+
   ${str}
 }
 `
