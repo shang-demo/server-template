@@ -686,9 +686,9 @@
     normalize-path "^2.0.1"
     through2 "^2.0.3"
 
-"@ofa2/eslint-config-ofa2@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@ofa2/eslint-config-ofa2/-/eslint-config-ofa2-1.0.1.tgz#1e7c49071173d9b12d91c567689c3aa3c57a6020"
+"@ofa2/eslint-config-ofa2@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@ofa2/eslint-config-ofa2/-/eslint-config-ofa2-1.0.2.tgz#0a270061fa85169fb1b519da9ae2809405dfca0d"
 
 "@ofa2/file-path-one-layer@^1.0.5":
   version "1.1.0"

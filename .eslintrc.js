@@ -8,7 +8,5 @@ module.exports = {
     Context: false,
   },
   extends: ['@ofa2/eslint-config-ofa2'],
-  rules: {
-    'strict': ['off']
-  },
+  rules: {},
 };
