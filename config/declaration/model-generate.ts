@@ -46,6 +46,7 @@ import { ObjectID as MongodbObjectId } from 'mongodb';
 
 declare global {
   var ObjectID: typeof MongodbObjectId;
+  var Mixed: {[key: string]: any]};
 ${str}
 }
 `
