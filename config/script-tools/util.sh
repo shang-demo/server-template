@@ -14,7 +14,7 @@ function _generateLog() {
 	local currentHead=`git rev-parse HEAD`
 	local pushDate=`date +%Y_%m_%d_%H_%M_%S`
 
-	echo ${currentBranch}-${pushDate}-${currentHead} > ./dist/config/version.txt
+	echo ${currentBranch}-${pushDate}-${currentHead} > ./dist/version.txt
 }
 
 function _initGit() {

@@ -6,6 +6,7 @@ global.Promise = Promise;
 
 function throwIfMissing(Extra: any, ...args: any[]) {
   if (Extra instanceof Errors.OperationalError) {
+    // @ts-ignore
     return new Extra(...args);
   }
 

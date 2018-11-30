@@ -33,6 +33,9 @@ const modelsPath = resolve(__dirname, '../../src/models');
       return file && file.stats && file.stats.isFile();
     })
     .map((file) => {
+      if (!file) {
+        throw new Error('no file');
+      }
       let modelName = basename(file.fileName, file.extname);
       return `  var ${modelName}: Model<any>;`;
     })
