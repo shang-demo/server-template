@@ -11,8 +11,8 @@ const { spawn } = require('child_process');
 const tsProject = ts.createProject('tsconfig.json', {
   allowJs: false,
   checkJs: false,
-  declaration: true,
-  declarationMap: true,
+  declaration: false,
+  declarationMap: false,
   sourceMap: true,
   rootDir: './',
   outDir: './dist',
@@ -80,6 +80,8 @@ gulp.task('eslint', (done) => {
     .pipe(f.restore)
     .pipe($.remember('eslint'));
 });
+
+gulp.task('lint', gulp.series('eslint'));
 
 gulp.task('tsc', (done) => {
   if (!validConfig(config.server)) {
