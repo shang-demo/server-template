@@ -7,6 +7,6 @@ module.exports = {
     SenecaMsg: false,
     Context: false,
   },
-  extends: ['@ofa2/eslint-config-ofa2'],
+  extends: ['@ofa2/eslint-config'],
   rules: {},
 };
