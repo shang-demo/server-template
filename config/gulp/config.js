@@ -30,19 +30,18 @@ const config = {
   },
   nodemon: {
     config: {
-      script: 'src/index.ts',
+      script: 'index.ts',
       ext: 'ts',
       watch: ['src/'],
       verbose: true,
       restartable: 'rs',
       env: {
         NODE_ENV: 'development',
+        TS_NODE_FILES: true,
       },
-      args: [
-        // if you want use attach debug, use `INSPECT=9229 gulp`
-        process.env.INSPECT ? [`--inspect=${process.env.INSPECT}`] : '',
-      ],
-      exec: './node_modules/.bin/ts-node --project=tsconfig.json --files src/index.ts',
+      exec: `node ${
+        process.env.INSPECT ? [`--inspect=${process.env.INSPECT}`] : ''
+      } --require=ts-node/register`,
     },
     events: {
       crash: true,

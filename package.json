@@ -62,6 +62,7 @@
     "gulp-typescript": "^5.0.0",
     "node-notifier": "^5.3.0",
     "nodemon": "^1.18.9",
+    "prettier-eslint": "^8.8.2",
     "streamqueue": "^1.1.2",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.0",

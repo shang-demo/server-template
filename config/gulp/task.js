@@ -102,7 +102,7 @@ gulp.task('tsc', (done) => {
 });
 
 gulp.task('tscWatch', () => {
-  spawn('tsc', ['-w', '--preserveWatchOutput'], { stdio: 'inherit' });
+  spawn('tsc', ['-w', '--preserveWatchOutput', '--skipLibCheck'], { stdio: 'inherit' });
 });
 
 gulp.task('wlint', (done) => {
