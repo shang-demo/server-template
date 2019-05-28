@@ -7,6 +7,7 @@ const writeFileAsync = promisify(writeFile);
 
 let str = `
 declare class ErrFn {
+  name: string;
   code: string;
   message: string;
   extra: any;
