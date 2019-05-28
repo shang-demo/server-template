@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "./node_modules/.bin/ts-node --project tsconfig.json --files src/index.ts",
-    "lint": "gulp eslint",
+    "lint": "gulp lint",
     "lint-fix": "./node_modules/.bin/eslint src/**/*.ts --fix",
     "watch": "gulp",
     "build": "npm run build:dist",

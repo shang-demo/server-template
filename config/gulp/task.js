@@ -81,7 +81,21 @@ gulp.task('eslint', (done) => {
     .pipe($.remember('eslint'));
 });
 
-gulp.task('lint', gulp.series('eslint'));
+gulp.task('tsc-lint', () => {
+  return ts
+    .createProject('tsconfig.json', {
+      allowJs: false,
+      checkJs: false,
+      declaration: false,
+      declarationMap: false,
+      sourceMap: false,
+      noEmit: true,
+    })
+    .src()
+    .pipe(tsProject(ts.reporter.longReporter()));
+});
+
+gulp.task('lint', gulp.parallel('eslint', 'tsc-lint'));
 
 gulp.task('tsc', (done) => {
   if (!validConfig(config.server)) {
