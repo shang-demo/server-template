@@ -60,7 +60,7 @@
     "gulp-replace": "^1.0.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-typescript": "^5.0.1",
-    "node-notifier": "^5.4.0",
+    "node-notifier": "^8.0.1",
     "nodemon": "^1.19.1",
     "prettier-eslint": "^9.0.0",
     "streamqueue": "^1.1.2",
