@@ -32,7 +32,7 @@
     "@ofa2/ofa2-seneca-wrap": "^2.0.1",
     "@ofa2/ofa2-shutdown": "^1.0.1",
     "bluebird": "^3.5.5",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "shortid": "^2.2.14",
     "tslib": "^1.10.0"
   },
